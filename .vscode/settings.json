@@ -1,0 +1,11 @@
+{
+  "files.autoSave": "off",
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.formatOnSave": true,
+  "editor.wordWrap": "on",
+  "editor.cursorBlinking": "expand",
+  "editor.cursorSmoothCaretAnimation": "on",
+  "editor.wordWrapColumn": 160,
+  "prettier.printWidth": 160,
+  "editor.fontFamily": "Google Sans Code"
+}
