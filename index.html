@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -15,7 +15,7 @@
   <body>
     <!-- Form starts -->
     <img class="icon" src="assets/images/logo-full.svg" alt="" />
-    <form action="#" class="form">
+    <form class="form">
       <h1 class="title">Your Journey to Coding Conf 2025 Starts Here!</h1>
       <p class="subtitle">Secure your spot at next year's biggest coding conference.</p>
       <div class="input-group">
@@ -50,27 +50,25 @@
       </div>
 
       <div class="generate-button">
-        <button type="submit">Generate My Ticket</button>
+        <button>Generate My Ticket</button>
       </div>
     </form>
     <!-- Form ends -->
 
     <!-- Generated tickets starts -->
-    <div class="result hidden">
+    <div class="result hidden" id="generatorResult">
       <h1 class="result-title">Congrats, <span id="firstName">Budi</span> <span id="lastName">Kapal</span>! Your ticket is ready.</h1>
-      <p class="information">
-        We've emailed your ticket to <span id="result-email">budikapallaut@gmail.com</span> and will send updates in the run up to the event.
-      </p>
+      <p class="information">We've emailed your ticket to <span id="result-email">budikapallaut@gmail.com</span> and will send updates in the run up to the event.</p>
 
       <div class="ticket">
         <img src="assets/images/pattern-ticket.svg" alt="" class="ticket-background" />
         <div class="ticket-main">
           <div class="ticket-top">
             <img class="ticket-icon" src="/assets/images/logo-full.svg" alt="" />
-            <p class="ticket-date">Jan 31, 2025 / Austin, TX</p>
+            <p class="ticket-date">Jan 31, 2025 <span class="organizer">/ Austin, TX</span></p>
           </div>
           <div class="ticket-bottom">
-            <img id="ticket-user" src="assets/images/image-avatar.jpg" alt="Image user ticket" width="48" height="48" />
+            <img id="userAvatar" src="assets/images/image-avatar.jpg" alt="Image user ticket" width="48" height="48" />
             <div class="user-info">
               <h3 class="user-name">Budi Kapal Laut</h3>
               <div class="user-github">

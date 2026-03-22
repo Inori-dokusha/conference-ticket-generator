@@ -136,6 +136,12 @@ label {
   object-fit: cover;
 }
 
+.btn-for-image {
+  width: 100%;
+  height: 100%;
+  text-align: center;
+}
+
 .btn-for-image > * {
   background-color: hsl(from var(--Neutral700) h s l / 0.4);
   padding: 0.5rem 0.8rem;
@@ -155,13 +161,13 @@ label {
   border-color: green;
 }
 
-.alert {
+.notice {
   display: flex;
   align-items: center;
-  gap: 0.8rem;
+  gap: 0.5rem;
 }
 
-.alert small {
+.notice-text {
   color: var(--Neutral500);
   font-size: 0.8rem;
 }
