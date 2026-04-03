@@ -1,50 +1,51 @@
-const btnGenerate = document.querySelector("#generate");
+// Get elements
+const generateTicketButton = document.querySelector("#generate");
 const ticketForm = document.querySelector(".ticket-form");
 const avatarUpload = document.querySelector("#uploadAvatar");
+const inputField = document.querySelectorAll(".input-field");
 const inputFile = document.querySelector("#avatar");
-const inputName = document.querySelector("#fullName");
-const inputEmail = document.querySelector("#email");
-const inputGitHub = document.querySelector("#github");
+const fullNameInput = document.querySelector("#fullName");
+const emailInput = document.querySelector("#email");
+const githubInput = document.querySelector("#github");
 const errorNotice = document.querySelector(".error-notice");
 const noticeText = document.querySelector(".notice-text");
 const infoText = document.querySelector(".info-text");
 const noticeIcon = document.querySelector("svg");
 const uploadImage = document.querySelector(".upload-image");
-const btnRemove = document.querySelector("#btnRemove");
-const btnChange = document.querySelector("#btnChange");
+const removeImageButton = document.querySelector("#btnRemove");
+const changeImageButton = document.querySelector("#btnChange");
 const uploadInstructions = document.querySelector(".upload-instructions");
-const generatorResult = document.querySelector("#generatorResult");
+const ticketResult = document.querySelector("#generatorResult");
 const fullName = document.querySelector(".user-fullname");
 const ticketDate = document.querySelector(".ticket-date");
 const userAvatar = document.querySelector("#userAvatar");
 const firstName = document.querySelector("#firstName");
 const lastName = document.querySelector("#lastName");
 const userEmail = document.querySelector("#userEmail");
-const userAccountGithub = document.querySelector(".github-username");
+const githubUsername = document.querySelector(".github-username");
 const ticketEventDate = document.querySelector(".ticket-event-date");
-const numberTicket = document.querySelector("#number");
+const ticketNumber = document.querySelector("#number");
 
 // Event to change and remove image after upload
-btnRemove.addEventListener("click", removeImage);
-btnChange.addEventListener("click", changeImage);
+removeImageButton.addEventListener("click", removeImage);
+changeImageButton.addEventListener("click", changeImage);
 
 // Event to generate ticket
-btnGenerate.addEventListener("click", generateTicket);
+generateTicketButton.addEventListener("click", generateTicket);
 
 // variable as signs
-let isEventAdded = true;
+let isEventAdded = false;
 
 // function to add event
 function addEvent() {
-  if (isEventAdded) {
-    inputFile.addEventListener("change", handleFiles);
-    avatarUpload.addEventListener("click", clickInputFile);
-    avatarUpload.addEventListener("dragover", dragover);
-    avatarUpload.addEventListener("dragleave", dragleave);
-    avatarUpload.addEventListener("drop", drop);
+  if (isEventAdded) return;
+  inputFile.addEventListener("change", handleFiles);
+  avatarUpload.addEventListener("click", clickInputFile);
+  avatarUpload.addEventListener("dragover", dragover);
+  avatarUpload.addEventListener("dragleave", dragleave);
+  avatarUpload.addEventListener("drop", drop);
 
-    isEventAdded = false;
-  }
+  isEventAdded = true;
 }
 
 window.onload = addEvent();
@@ -85,38 +86,42 @@ function drop(e) {
 
 // Check file size
 function checkFileSize(file) {
-  const fileSize = file.size;
-  const maxSizeKB = 500;
-  const fileSizeKB = fileSize / 1024;
-
-  if (fileSizeKB > maxSizeKB) {
-    showError(false);
+  // Check if the file size is greater than 500KB (500 * 1024 bytes)
+  if (file.size / 1024 > 500) {
+    showError();
   } else {
     updateImage(file);
   }
 }
 
 // update image
-function updateImage(image) {
-  const url = URL.createObjectURL(image);
+function updateImage(file) {
+  // Create a URL for the uploaded file
+  const url = URL.createObjectURL(file);
 
   // Save to local storage
   localStorage.setItem("url", url);
 
+  // Update the image source to the uploaded file
   uploadImage.src = url;
-  uploadImage.style.padding = "unset";
-  uploadInstructions.classList.add("hidden");
+  uploadImage.style.padding = "0";
 
-  btnRemove.parentElement.classList.remove("hidden");
+  // Hide the upload instructions and show the remove button
+  uploadInstructions.classList.add("hidden");
+  removeImageButton.parentElement.classList.remove("hidden");
 }
 
 // Remove avatar
 function removeImage() {
+  // Remove the URL from local storage
+  localStorage.removeItem("url");
+
+  // Reset the image source to the default upload icon
   uploadImage.src = "./assets/images/icon-upload.svg";
   uploadImage.style.padding = "0.5rem";
 
-  btnRemove.parentElement.classList.add("hidden");
-
+  // Hide the remove button and show the upload instructions
+  removeImageButton.parentElement.classList.add("hidden");
   uploadInstructions.classList.remove("hidden");
 }
 
@@ -125,84 +130,81 @@ function changeImage() {
   handleFiles();
 }
 
-// Check user input
-function userInput() {
-  const elements = [inputName, inputEmail, inputGitHub];
-
-  let result = [];
-
-  for (const el of elements) {
-    if (el.value === "") {
-      showError(inputName);
-    } else {
-      result.push(el.value);
-    }
+// Validate input
+function validateInput() {
+  if (fullNameInput.value === "") {
+    showError(fullNameInput);
+    return false;
   }
-
-  return result;
+  if (emailInput.value === "") {
+    showError(emailInput);
+    return false;
+  }
+  if (githubInput.value === "") {
+    showError(githubInput);
+    return false;
+  } else {
+    return [fullNameInput.value, emailInput.value, githubInput.value];
+  }
 }
 
 // Generate ticket
 function generateTicket() {
   // Get value
-  const result = userInput();
+  const result = validateInput();
 
-  if (!result.length === 0) {
-    // Sign in value
+  if (result !== false) {
+    // Destructure the result array to get name, email, and GitHub account
     let name = result[0];
     let email = result[1];
     let githubAccount = result[2];
 
-    // split name from the array
+    // Split the name into an array of words and get the first two words as the first and last name
     let splitName = name.split(" ");
-    let resultSplitName;
 
-    if (splitName.length > 2) {
-      resultSplitName = splitName.splice(0, 2);
-    }
-
-    // Setting format time
+    // Format the date options
     const option = {
       year: "numeric",
       month: "short",
-      day: "numeric"
+      day: "numeric",
     };
 
-    // Set output to MMM-DD-YYYY
+    // Get the current date and format it using the specified options
     const date = new Date().toLocaleDateString("en-US", option);
 
-    // Update html
+    // Hide the ticket form and show the generator result
     ticketForm.classList.add("hidden");
-    generatorResult.classList.remove("hidden");
+    ticketResult.classList.remove("hidden");
 
-    // Get the url from local storage
+    // Get the image URL from local storage and update the user avatar source
     const imageUrl = localStorage.getItem("url");
     userAvatar.src = imageUrl;
 
-    // Update elements
+    // Update the text content of the first name, last name, full name, email, GitHub account, ticket event date, and ticket number elements
     firstName.textContent = splitName[0];
     lastName.textContent = splitName[1];
     fullName.textContent = name;
     userEmail.textContent = email;
-    userAccountGithub.textContent = `@${githubAccount.toLowerCase()}`;
+    githubUsername.textContent = `@${githubAccount.toLowerCase()}`;
     ticketEventDate.textContent = `${date} / Austin, TX`;
-    numberTicket.textContent = `${Math.floor(Math.random() * 90000 + 10000)}#`;
+    ticketNumber.textContent = `${Math.floor(Math.random() * 90000 + 10000)}#`;
 
-    // disable the event listener after generate the ticket
-    addEvent(false);
+    // Disable event listeners after generating the ticket
+    isEventAdded = false;
   }
 }
 
-// Show error message
-function showError(childElement) {
-  if (childElement === inputName) {
-    inputName.parentElement.classList.remove("hidden");
-  } else if (childElement === inputEmail) {
-    inputEmail.parentElement.classList.remove("hidden");
-  } else if (childElement === inputGitHub) {
-    inputGitHub.parentElement.classList.remove("hidden");
-  } else {
-    infoText.classList.add("error-text");
-    noticeIcon.classList.add("error-icon");
+// Show error
+function showError(elementID) {
+  if (inputField[0].id === elementID && elementID === "inputFullName") {
+    console.log(0);
+  } else if (inputField[1].id === elementID && elementID === "inputEmail") {
+    console.log(1);
+  } else if (inputField[2].id === elementID && elementID === "inputGithub") {
+    console.log(2);
   }
 }
+
+showError("inputEmail");
+showError("inputFullName");
+showError("inputGithub");
