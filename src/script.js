@@ -65,9 +65,6 @@ function addEvent() {
 // Add event when the page is loaded
 window.onload = addEvent();
 
-// remove the URL from local storage when the page is loaded
-window.onload = localStorage.removeItem("url");
-
 // Upload image
 function clickInputFile() {
     inputFile.click();
@@ -108,6 +105,7 @@ function checkFileSize(file) {
     if (file.size / 1024 > 500) {
         showError(true);
     } else {
+        resetError();
         updateImage(file);
     }
 }
@@ -145,8 +143,14 @@ function removeImage() {
 
 // Change avatar
 function changeImage() {
-    handleFiles();
+    inputFile.click();
 }
+
+// Check input is typing
+[fullNameInput, emailInput, githubInput].forEach((input) => {
+    input.addEventListener("input", resetError);
+    console.log(input.value);
+});
 
 // Validate input
 function validateInput() {
@@ -209,7 +213,7 @@ function generateTicket() {
         lastName.textContent = splitName[1];
         fullName.textContent = name;
         userEmail.textContent = email;
-        githubUsername.textContent = `@${githubAccount.toLowerCase()}`;
+        githubUsername.textContent = `@${githubAccount.replaceAll(" ", "").toLowerCase()}`;
         ticketEventDate.textContent = `${date} / Austin, TX`;
         ticketNumber.textContent = `${Math.floor(Math.random() * 90000 + 10000)}#`;
 
@@ -242,4 +246,14 @@ function showError(errorUpload = false, ...elementsID) {
             errorInputGithub.classList.remove("hidden");
         }
     });
+}
+
+// Reset error messages
+function resetError() {
+    infoText.textContent = "Upload your photo (JPG or PNG, max size: 500KB).";
+    infoText.classList.remove("error-text");
+    noticeIcon.forEach((icon) => icon.classList.remove("error-icon"));
+    errorInputFullName.classList.add("hidden");
+    errorInputEmail.classList.add("hidden");
+    errorInputGithub.classList.add("hidden");
 }
