@@ -18,7 +18,7 @@
             <p class="form-subtitle">Secure your spot at next year's biggest coding conference.</p>
 
             <div class="form-group">
-                <label for="upload-avatar-text">Upload Avatar</label>
+                <label for="avatar" class="upload-avatar-text">Upload Avatar</label>
 
                 <div class="avatar-upload-area" id="uploadAvatar">
                     <input type="file" id="avatar" accept="image/png, image/jpeg" hidden class="file-input" />
@@ -59,7 +59,7 @@
 
                 <div class="input-field" id="inputEmailAddress">
                     <label for="email">Email Address</label>
-                    <input type="email" id="email" placeholder="example@email.com" required />
+                    <input type="email" id="email" placeholder="example@email.com" required autocomplete="email" />
 
                     <!-- Error Message -->
                     <div class="error-notice hidden" id="errorEmailAddress">
