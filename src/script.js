@@ -40,6 +40,11 @@ const githubUsername = document.querySelector(".github-username");
 const ticketEventDate = document.querySelector(".ticket-event-date");
 const ticketNumber = document.querySelector("#number");
 
+// Check input is typing
+[fullNameInput, emailInput, githubInput].forEach((input) => {
+    input.addEventListener("input", validateInput);
+});
+
 // Event to change and remove image after upload
 removeImageButton.addEventListener("click", removeImage);
 changeImageButton.addEventListener("click", changeImage);
@@ -62,8 +67,7 @@ function addEvent() {
     isEventAdded = true;
 }
 
-// Add event when the page is loaded
-window.onload = addEvent();
+addEvent();
 
 // Upload image
 function clickInputFile() {
@@ -103,7 +107,7 @@ function drop(e) {
 function checkFileSize(file) {
     // Check if the file size is greater than 500KB (500 * 1024 bytes)
     if (file.size / 1024 > 500) {
-        showError(true);
+        showError(true, "fileLarge");
     } else {
         resetError();
         updateImage(file);
@@ -143,95 +147,115 @@ function removeImage() {
 
 // Change avatar
 function changeImage() {
-    inputFile.click();
+    clickInputFile();
 }
 
-// Check input is typing
-[fullNameInput, emailInput, githubInput].forEach((input) => {
-    input.addEventListener("input", resetError);
-    console.log(input.value);
-});
-
 // Validate input
-function validateInput() {
+function validateInput(e) {
     const regexEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const checkNumberOnString = /\d+/g;
 
-    if (fullNameInput.value === "" && emailInput.value === "" && githubInput.value === "") {
-        // If all input fields are empty, show error messages for all fields
-        showError(false, "inputFullName", "inputEmail", "inputGithub");
-        return false;
-        // if not, check each field and show error message for the empty field
-    } else if (fullNameInput.value === "") {
-        showError(false, "inputFullName");
-        return false;
-    }
-    if (emailInput.value === "" || !regexEmail.test(emailInput.value)) {
-        showError(false, "inputEmail");
-        return false;
-    }
-    if (githubInput.value === "") {
-        showError(false, "inputGithub");
-        return false;
-    } else {
-        return [fullNameInput.value, emailInput.value, githubInput.value];
+    if (!e || !e.target) return;
+
+    if (e.target.id === "fullName") {
+        if (e.target.value.trim() === "" || checkNumberOnString.test(e.target.value)) {
+            showError(false, "nameError", "inputFullName");
+            return false;
+        } else {
+            resetError();
+        }
+    } else if (e.target.id === "email") {
+        if (!regexEmail.test(e.target.value) || e.target.value.trim() === "") {
+            showError(false, "emailError", "inputEmail");
+            return false;
+        } else {
+            resetError();
+        }
+    } else if (e.target.id === "github") {
+        if (e.target.value.trim() === "") {
+            showError(false, "inputGithub");
+            return false;
+        } else {
+            resetError();
+        }
     }
 }
 
 // Generate ticket
 function generateTicket() {
     // Get value
-    const result = validateInput();
+    const [inputName, inputEmail, inputGithub] = [fullNameInput.value, emailInput.value, githubInput.value];
 
-    if (result !== false && localStorage.getItem("url") !== null) {
-        // Destructure the result array to get name, email, and GitHub account
-        let name = result[0];
-        let email = result[1];
-        let githubAccount = result[2];
+    const userAvatarUrl = localStorage.getItem("url");
 
-        // Split the name into an array of words and get the first two words as the first and last name
-        let splitName = name.split(" ");
-
-        // Format the date options
-        const option = {
-            year: "numeric",
-            month: "short",
-            day: "numeric",
-        };
-
-        // Get the current date and format it using the specified options
-        const date = new Date().toLocaleDateString("en-US", option);
-
-        // Hide the ticket form and show the generator result
-        ticketForm.classList.add("hidden");
-        ticketResult.classList.remove("hidden");
-
-        // Get the image URL from local storage and update the user avatar source
-        userAvatar.src = localStorage.getItem("url");
-
-        // Update the text content
-        firstName.textContent = splitName[0];
-        lastName.textContent = splitName[1];
-        fullName.textContent = name;
-        userEmail.textContent = email;
-        githubUsername.textContent = `@${githubAccount.replaceAll(" ", "").toLowerCase()}`;
-        ticketEventDate.textContent = `${date} / Austin, TX`;
-        ticketNumber.textContent = `${Math.floor(Math.random() * 90000 + 10000)}#`;
-
-        // Disable event listeners after generating the ticket
-        isEventAdded = false;
+    if (inputName === "" || inputEmail === "" || inputGithub === "" || !userAvatarUrl) {
+        showError(true, "empty", "inputFullName", "inputEmail", "inputGithub");
+        return;
     }
+
+    if (userAvatarUrl === null) showError(true, "defaultMessageUpload");
+
+    // Destructure the result array to get name, email, and GitHub account
+    let name = inputName;
+    let email = inputEmail;
+    let githubAccount = inputGithub;
+
+    // Split the name into an array of words and get the first two words as the first and last name
+    let splitName = name.split(" ");
+
+    // Format the date options
+    const option = {
+        year: "numeric",
+        month: "short",
+        day: "numeric",
+    };
+
+    // Get the current date and format it using the specified options
+    const date = new Date().toLocaleDateString("en-US", option);
+
+    // Hide the ticket form and show the generator result
+    ticketForm.classList.add("hidden");
+    ticketResult.classList.remove("hidden");
+
+    // Get the user avatar from local storage
+    userAvatar.src = localStorage.getItem("url");
+
+    // Update the text content
+    firstName.textContent = splitName[0];
+    lastName.textContent = splitName[1];
+    fullName.textContent = name;
+    userEmail.textContent = email;
+    githubUsername.textContent = `@${githubAccount.replaceAll(" ", "").toLowerCase()}`;
+    ticketEventDate.textContent = `${date} / Austin, TX`;
+    ticketNumber.textContent = `${Math.floor(Math.random() * 90000 + 10000)}#`;
 }
 
+// Message for file upload and input fields
+const messageError = {
+    defaultMessageUpload: "Upload your photo (JPG or PNG, max 500KB).",
+    fileLarge: "File too large. Please uplaod under 500KB.",
+    nameError: "Name cannot include a number.",
+    emailError: "Please enter a valid email address.",
+};
+
 // Show error
-function showError(errorUpload = false, ...elementsID) {
+function showError(errorUpload = false, message = "", ...elementsID) {
+    // For file upload
     if (errorUpload) {
-        // If the error is related to file upload, show a specific error message
-        infoText.textContent = "File too large. Please uplaod under 500KB.";
         infoText.classList.add("error-text");
         noticeIcon.forEach((icon) => icon.classList.add("error-icon"));
     }
 
-    // Loop through the provided element IDs and show the corresponding error messages
+    // For message
+    if (message === "fileLarge") {
+        infoText.textContent = messageError.fileLarge;
+    } else if (message === "inputName") {
+        errorInputFullName.children[1].textContent = messageError.nameError;
+    } else if (message === "inputEmail") {
+        errorInputEmail.children[1].textContent = messageError.emailError;
+    }
+
+    // For input fields
     elementsID.forEach((id) => {
         if (id === "inputFullName") {
             errorInputFullName.classList.remove("hidden");
@@ -239,20 +263,17 @@ function showError(errorUpload = false, ...elementsID) {
             errorInputEmail.classList.remove("hidden");
         } else if (id === "inputGithub") {
             errorInputGithub.classList.remove("hidden");
-        } else {
-            // If no specific ID is provided, show all error messages
-            errorInputFullName.classList.remove("hidden");
-            errorInputEmail.classList.remove("hidden");
-            errorInputGithub.classList.remove("hidden");
         }
     });
 }
 
 // Reset error messages
 function resetError() {
-    infoText.textContent = "Upload your photo (JPG or PNG, max size: 500KB).";
-    infoText.classList.remove("error-text");
     noticeIcon.forEach((icon) => icon.classList.remove("error-icon"));
+
+    infoText.textContent = messageError.defaultMessageUpload;
+
+    infoText.classList.remove("error-text");
     errorInputFullName.classList.add("hidden");
     errorInputEmail.classList.add("hidden");
     errorInputGithub.classList.add("hidden");
