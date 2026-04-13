@@ -214,7 +214,7 @@ input:focus {
     width: 15px;
 }
 
-.error-notice svg path {
+svg path {
     stroke: var(--Neutral500);
 }
 
