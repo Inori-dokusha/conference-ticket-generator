@@ -38,10 +38,8 @@ const githubUsername = document.querySelector(".github-username");
 const ticketEventDate = document.querySelector(".ticket-event-date");
 const ticketNumber = document.querySelector("#number");
 
-// Check input is typing
-[fullNameInput, emailInput, githubInput].forEach((input) => {
-    input.addEventListener("input", validateInput);
-});
+// Default url of avatar
+const defaultUrl = uploadImage.src;
 
 // Event to generate ticket
 generateTicketButton.addEventListener("click", generateTicket);
@@ -112,83 +110,100 @@ function updateImage(file) {
     // Create a URL for the uploaded file
     const url = URL.createObjectURL(file);
 
-    // Save to local storage
-    localStorage.setItem("url", url);
-
     // Update the image source to the uploaded file
     uploadImage.src = url;
     uploadImage.style.padding = "0";
 
     // Hide the upload instructions and show the remove button
     uploadInstructions.classList.add("hidden");
-    removeImageButton.parentElement.classList.remove("hidden");
+    uploadAvatar.children[2].classList.remove("hidden");
 }
 
 // Remove avatar
 function removeImage() {
-    // Remove the URL from local storage
-    localStorage.removeItem("url");
+    URL.revokeObjectURL(uploadImage.src);
 
-    // Reset the image source to the default upload icon
-    uploadImage.src = "./assets/images/icon-upload.svg";
+    // Reset url of image to default and add padding
+    uploadImage.src = defaultUrl;
     uploadImage.style.padding = "0.5rem";
 
     // Hide the remove button and show the upload instructions
-    uploadAvatar.classList.add("hidden");
+    uploadAvatar.children[2].classList.add("hidden");
     uploadInstructions.classList.remove("hidden");
 }
-
-console.log(uploadAvatar.children[2]);
 
 // Change avatar
 function changeImage() {
     inputFile.click();
 }
 
-// Validate input
-function validateInput(e) {
-    const regexEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    const checkNumberOnString = /\d+/g;
+// Check input is typing
+[fullNameInput, emailInput, githubInput].forEach((input) => {
+    input.addEventListener("input", (e) => {
+        const regexEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        const checkNumberOnString = /\d+/g;
 
-    if (!e || !e.target) return;
+        if (!e || !e.target) return;
 
-    if (e.target.id === "fullName") {
-        if (e.target.value.trim() === "" || checkNumberOnString.test(e.target.value)) {
-            showError(false, "nameError", "inputFullName");
-            return false;
-        } else {
-            resetError();
+        // full name
+        if (e.target.id === "fullName") {
+            if (e.target.value.trim() === "" || checkNumberOnString.test(e.target.value)) {
+                showError(false, "name", "inputFullName");
+            } else {
+                resetError();
+            }
         }
-    } else if (e.target.id === "email") {
-        if (!regexEmail.test(e.target.value) || e.target.value.trim() === "") {
-            showError(false, "emailError", "inputEmail");
-            return false;
-        } else {
-            resetError();
+
+        // email
+        if (e.target.id === "email") {
+            if (!regexEmail.test(e.target.value) || e.target.value.trim() === "") {
+                showError(false, "email", "inputEmail");
+            } else {
+                resetError();
+            }
         }
-    } else if (e.target.id === "github") {
-        if (e.target.value.trim() === "") {
-            showError(false, "inputGithub");
-            return false;
-        } else {
-            resetError();
+
+        // github
+        if (e.target.id === "github") {
+            if (e.target.value.trim() === "" || e.target.value.includes(" ")) {
+                showError(false, "github", "inputGithub");
+            } else {
+                resetError();
+            }
         }
+    });
+});
+
+// Check value of input
+function checkInputValue() {
+    // Get value
+    const [inputName, inputEmail, inputGithub] = [fullNameInput.value, emailInput.value, githubInput.value];
+
+    if (uploadImage.src === defaultUrl) {
+        showError(true, "");
+        return false;
+    } else if (inputName === "") {
+        showError(false, "name", "inputFullName");
+        return false;
+    } else if (inputEmail === "") {
+        showError(false, "email", "inputEmail");
+        return false;
+    } else if (inputGithub === "") {
+        showError(false, "github", "inputGithub");
+        return false;
+    } else {
+        resetError();
+        return [inputName, inputEmail, inputGithub];
     }
 }
 
 // Generate ticket
 function generateTicket() {
-    // Get value
-    const [inputName, inputEmail, inputGithub] = [fullNameInput.value, emailInput.value, githubInput.value];
+    const result = checkInputValue();
 
-    const userAvatarUrl = localStorage.getItem("url");
+    if (!result) return;
 
-    if (inputName === "" || inputEmail === "" || inputGithub === "" || !userAvatarUrl) {
-        showError(true, "empty", "inputFullName", "inputEmail", "inputGithub");
-        return;
-    }
-
-    if (userAvatarUrl === null) showError(true, "defaultMessageUpload");
+    const [inputName, inputEmail, inputGithub] = result;
 
     // Destructure the result array to get name, email, and GitHub account
     let name = inputName;
@@ -213,14 +228,14 @@ function generateTicket() {
     ticketResult.classList.remove("hidden");
 
     // Get the user avatar from local storage
-    userAvatar.src = localStorage.getItem("url");
+    userAvatar.src = uploadImage.src;
 
     // Update the text content
     firstName.textContent = splitName[0];
     lastName.textContent = splitName[1];
     fullName.textContent = name;
     userEmail.textContent = email;
-    githubUsername.textContent = `@${githubAccount.replaceAll(" ", "").toLowerCase()}`;
+    githubUsername.textContent = `@${githubAccount.toLowerCase()}`;
     ticketEventDate.textContent = `${date} / Austin, TX`;
     ticketNumber.textContent = `${Math.floor(Math.random() * 90000 + 10000)}#`;
 }
@@ -231,6 +246,7 @@ const messageError = {
     fileLarge: "File too large. Please uplaod under 500KB.",
     nameError: "Name cannot include a number.",
     emailError: "Please enter a valid email address.",
+    githubError: "GitHub account cannot include space.",
 };
 
 // Show error
@@ -239,15 +255,18 @@ function showError(errorUpload = false, message = "", ...elementsID) {
     if (errorUpload) {
         infoText.classList.add("error-text");
         noticeIcon.forEach((icon) => icon.classList.add("error-icon"));
+        if (message === "fileLarge") {
+            infoText.textContent = messageError.fileLarge;
+        }
     }
 
     // For message
-    if (message === "fileLarge") {
-        infoText.textContent = messageError.fileLarge;
-    } else if (message === "inputName") {
+    if (message === "name") {
         errorInputFullName.children[1].textContent = messageError.nameError;
-    } else if (message === "inputEmail") {
+    } else if (message === "email") {
         errorInputEmail.children[1].textContent = messageError.emailError;
+    } else if (message === "github") {
+        errorInputGithub.children[1].textContent = messageError.githubError;
     }
 
     // For input fields
