@@ -1,7 +1,7 @@
 // Get element generator button
 const generateTicketButton = document.querySelector("#generate");
 
-// Get element form and avatar upload
+// Get element form
 const ticketForm = document.querySelector("#ticketForm");
 
 // Get error elements and input fields
@@ -23,9 +23,7 @@ const noticeIcon = document.querySelectorAll("#errorUpload svg path");
 
 // Get element to upload and remove avatar
 const uploadImage = document.querySelector(".upload-image");
-const avatarUpload = document.querySelector("#uploadAvatar");
-const removeImageButton = document.querySelector("#btnRemove");
-const changeImageButton = document.querySelector("#btnChange");
+const uploadAvatar = document.querySelector("#uploadAvatar");
 const uploadInstructions = document.querySelector(".upload-instructions");
 
 // Get element to show result
@@ -45,29 +43,24 @@ const ticketNumber = document.querySelector("#number");
     input.addEventListener("input", validateInput);
 });
 
-// Event to change and remove image after upload
-removeImageButton.addEventListener("click", removeImage);
-changeImageButton.addEventListener("click", changeImage);
-
 // Event to generate ticket
 generateTicketButton.addEventListener("click", generateTicket);
 
-// variable as signs
-let isEventAdded = false;
+// Events for uploading images and button actions
+uploadAvatar.addEventListener("click", (e) => {
+    if (e.target.id === "uploadAvatar") {
+        clickInputFile();
+    } else if (e.target.id === "btnRemove") {
+        removeImage();
+    } else if (e.target.id === "btnChange") {
+        changeImage();
+    }
+});
 
-// function to add event
-function addEvent() {
-    if (isEventAdded) return;
-    inputFile.addEventListener("change", handleFiles);
-    avatarUpload.addEventListener("click", clickInputFile);
-    avatarUpload.addEventListener("dragover", dragover);
-    avatarUpload.addEventListener("dragleave", dragleave);
-    avatarUpload.addEventListener("drop", drop);
-
-    isEventAdded = true;
-}
-
-addEvent();
+inputFile.addEventListener("change", handleFiles);
+uploadAvatar.addEventListener("dragover", dragover);
+uploadAvatar.addEventListener("dragleave", dragleave);
+uploadAvatar.addEventListener("drop", drop);
 
 // Upload image
 function clickInputFile() {
@@ -141,13 +134,15 @@ function removeImage() {
     uploadImage.style.padding = "0.5rem";
 
     // Hide the remove button and show the upload instructions
-    removeImageButton.parentElement.classList.add("hidden");
+    uploadAvatar.classList.add("hidden");
     uploadInstructions.classList.remove("hidden");
 }
 
+console.log(uploadAvatar.children[2]);
+
 // Change avatar
 function changeImage() {
-    clickInputFile();
+    inputFile.click();
 }
 
 // Validate input
