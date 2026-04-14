@@ -87,8 +87,8 @@ In future iterations I want to improve:
 
 ## Author
 
-- Frontend Mentor - [@yourusername](https://www.frontendmentor.io/profile/yourusername)
-- Instagram - [@leonardomanalu\_](https://www.instagram.com/leonardomanalu)
+- Frontend Mentor - [@Inori-dokusha](https://www.frontendmentor.io/profile/Inori-dokusha)
+- Instagram - [@leonardomnlu](https://www.instagram.com/leonardomnlu/)
 
 ## Acknowledgments
 
