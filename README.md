@@ -15,6 +15,7 @@ This project is a custom build of the [Conference ticket generator challenge on 
     - [Useful resources](#useful-resources)
 - [Author](#author)
 - [Acknowledgments](#acknowledgments)
+- [AI](#ai)
 
 ## Overview
 
