@@ -16,7 +16,6 @@ const emailInput = document.querySelector("#email");
 const githubInput = document.querySelector("#github");
 
 // Get element to show error message
-const errorNotice = document.querySelector(".error-notice");
 const noticeText = document.querySelector(".notice-text");
 const infoText = document.querySelector(".info-text");
 const noticeIcon = document.querySelectorAll("#errorUpload svg path");
@@ -212,20 +211,16 @@ function generateTicket() {
     const [inputName, inputEmail, inputGithub] = result;
     
     // Destructure the result array to get name, email, and GitHub account
-    let name = inputName;
-    let email = inputEmail;
-    let githubAccount = inputGithub;
+    const name = inputName;
+    const email = inputEmail;
+    const githubAccount = inputGithub;
     
     // Split the name into an array of words and get the first two words as the first and last name
     let splitName = name.split(" ");
     
-    if (splitName.length < 2) {
-        firstName.textContent = splitName[0];
-        lastName.textContent = splitName[1];
-    } else {
-        firstName.textContent = splitName[0];
-        lastName.textContent = splitName[1];
-    }
+    // Just take index 0 and 1 from the array
+    firstName.textContent = splitName.slice(0, 1);
+    lastName.textContent = splitName.slice(1, 2);
     
     // Format the date options
     const option = {
