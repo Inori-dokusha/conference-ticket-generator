@@ -33,11 +33,11 @@ Users should be able to:
 
 ### Screenshot
 
-![Mobile](./design/screenshots/mobile.png)
-
-![Desktop](./design/screenshots/after-upload-and-field-input.png)
-
-![Desktop](./design/screenshots/generate-ticket.png)
+<div style="display: flex; overflow-x: auto; gap: 10px;">
+    <img src="./design/screenshots/mobile.png">
+    <img src="./design/screenshots/after-upload-and-field-input.png">
+    <img src="./design/screenshots/generate-ticket.png" width="600">
+</div>
 
 ## Links
 
