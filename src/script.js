@@ -75,17 +75,17 @@ function handleFiles() {
 
 function dragover(e) {
     e.preventDefault();
-    avatarUpload.classList.add("focus");
+    uploadAvatar.classList.add("focus");
 }
 
 function dragleave() {
-    avatarUpload.classList.remove("focus");
+    uploadAvatar.classList.remove("focus");
 }
 
 function drop(e) {
     e.preventDefault();
 
-    avatarUpload.classList.remove("focus");
+    uploadAvatar.classList.remove("focus");
 
     const file = e.dataTransfer.files[0];
 
@@ -105,10 +105,12 @@ function checkFileSize(file) {
     }
 }
 
+let url;
+
 // update image
 function updateImage(file) {
     // Create a URL for the uploaded file
-    const url = URL.createObjectURL(file);
+    url = URL.createObjectURL(file);
 
     // Update the image source to the uploaded file
     uploadImage.src = url;
@@ -116,19 +118,19 @@ function updateImage(file) {
 
     // Hide the upload instructions and show the remove button
     uploadInstructions.classList.add("hidden");
-    uploadAvatar.children[2].classList.remove("hidden");
+    uploadAvatar.querySelector(".upload-actions").classList.remove("hidden");
 }
 
 // Remove avatar
 function removeImage() {
-    URL.revokeObjectURL(uploadImage.src);
+    URL.revokeObjectURL(url);
 
     // Reset url of image to default and add padding
     uploadImage.src = defaultUrl;
     uploadImage.style.padding = "0.5rem";
 
     // Hide the remove button and show the upload instructions
-    uploadAvatar.children[2].classList.add("hidden");
+    uploadAvatar.querySelector(".upload-actions").classList.add("hidden");
     uploadInstructions.classList.remove("hidden");
 }
 
@@ -179,6 +181,11 @@ function checkInputValue() {
     // Get value
     const [inputName, inputEmail, inputGithub] = [fullNameInput.value, emailInput.value, githubInput.value];
 
+    if (updateImage.src === defaultUrl && inputName === "" && inputEmail === "" && inputGithub === "") {
+        showError(true, "inputFullName", "inputEmail", "inputGithub");
+        return false;
+    }
+
     if (uploadImage.src === defaultUrl) {
         showError(true, "");
         return false;
@@ -192,7 +199,6 @@ function checkInputValue() {
         showError(false, "github", "inputGithub");
         return false;
     } else {
-        resetError();
         return [inputName, inputEmail, inputGithub];
     }
 }
@@ -213,6 +219,14 @@ function generateTicket() {
     // Split the name into an array of words and get the first two words as the first and last name
     let splitName = name.split(" ");
 
+    if (splitName.length < 2) {
+        firstName.textContent = splitName[0];
+        lastName.textContent = splitName[1];
+    } else {
+        firstName.textContent = splitName[0];
+        lastName.textContent = splitName[1];
+    }
+
     // Format the date options
     const option = {
         year: "numeric",
@@ -231,8 +245,6 @@ function generateTicket() {
     userAvatar.src = uploadImage.src;
 
     // Update the text content
-    firstName.textContent = splitName[0];
-    lastName.textContent = splitName[1];
     fullName.textContent = name;
     userEmail.textContent = email;
     githubUsername.textContent = `@${githubAccount.toLowerCase()}`;
@@ -243,7 +255,7 @@ function generateTicket() {
 // Message for file upload and input fields
 const messageError = {
     defaultMessageUpload: "Upload your photo (JPG or PNG, max 500KB).",
-    fileLarge: "File too large. Please uplaod under 500KB.",
+    fileLarge: "File too large. Please upload under 500KB.",
     nameError: "Name cannot include a number.",
     emailError: "Please enter a valid email address.",
     githubError: "GitHub account cannot include space.",
@@ -262,21 +274,24 @@ function showError(errorUpload = false, message = "", ...elementsID) {
 
     // For message
     if (message === "name") {
-        errorInputFullName.children[1].textContent = messageError.nameError;
+        errorInputFullName.querySelector(".notice-text").textContent = messageError.nameError;
     } else if (message === "email") {
-        errorInputEmail.children[1].textContent = messageError.emailError;
+        errorInputEmail.querySelector(".notice-text").textContent = messageError.emailError;
     } else if (message === "github") {
-        errorInputGithub.children[1].textContent = messageError.githubError;
+        errorInputGithub.querySelector(".notice-text").textContent = messageError.githubError;
     }
 
     // For input fields
     elementsID.forEach((id) => {
         if (id === "inputFullName") {
             errorInputFullName.classList.remove("hidden");
+            fullNameInput.classList.add("error-input");
         } else if (id === "inputEmail") {
             errorInputEmail.classList.remove("hidden");
+            emailInput.classList.add("error-input");
         } else if (id === "inputGithub") {
             errorInputGithub.classList.remove("hidden");
+            githubInput.classList.add("error-input");
         }
     });
 }
@@ -291,4 +306,9 @@ function resetError() {
     errorInputFullName.classList.add("hidden");
     errorInputEmail.classList.add("hidden");
     errorInputGithub.classList.add("hidden");
+
+    // Remove error input border
+    fullNameInput.classList.remove("error-input");
+    emailInput.classList.remove("error-input");
+    githubInput.classList.remove("error-input");
 }
