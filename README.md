@@ -42,7 +42,7 @@ Users should be able to:
 
 ## Links
 
-- Live Site URL: [Add live site URL here](https://your-live-site-url.com)
+- Live Site URL: [Github Pages](https://inori-dokusha.github.io/conference-ticket-generator/)
 
 ## My process
 
