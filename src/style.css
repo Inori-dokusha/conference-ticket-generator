@@ -355,7 +355,7 @@ svg path {
 /* ---------------------------------------- */
 
 /* For desktop */
-@media (min-width: 720px) and (max-width: 1440px) {
+@media (min-width: 720px) {
     body {
         background-image: url("../assets/images/background-desktop.png");
     }
