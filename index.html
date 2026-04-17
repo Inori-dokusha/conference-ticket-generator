@@ -7,132 +7,134 @@
         <link rel="icon" type="image/png" sizes="32x32" href="./assets/images/favicon-32x32.png" />
 
         <title>Frontend Mentor | Conference ticket generator</title>
-        <link rel="stylesheet" href="src/style.css" />
+        <link rel="stylesheet" href="src/main.css" />
     </head>
 
-    <body>
-        <!-- Form starts -->
-        <img class="site-logo" src="assets/images/logo-full.svg" alt="" />
-        <div class="ticket-form" id="ticketForm">
-            <h1 class="form-title">Your Journey to Coding Conf 2025 Starts Here!</h1>
-            <p class="form-subtitle">Secure your spot at next year's biggest coding conference.</p>
+    <body class="font-sans text-Neutral0 p-5 bg-[url(../assets/images/background-mobile.png)]">
+        <header class="mt-3 mb-10 flex w-full">
+            <img class="mx-auto w-1/2" src="assets/images/logo-full.svg" alt="Header Logo" />
+        </header>
 
-            <div id="formUpload" class="form-group">
-                <label for="avatar" class="upload-avatar-text">Upload Avatar</label>
+        <!-- Main Content -->
+        <main class="">
+            <!-- Form starts -->
+            <form class="" id="ticketForm">
+                <div class="text-center mb-4">
+                    <h1 class="text-3xl font-bold mb-4">Your Journey to Coding Conf 2025 Starts Here!</h1>
+                    <p class="text-lg/6 text-Neutral300">Secure your spot at next year's biggest coding conference.</p>
+                </div>
 
-                <div class="avatar-upload-area" id="uploadAvatar">
-                    <input type="file" id="avatar" accept="image/png, image/jpeg" hidden class="file-input" />
-                    <img src="assets/images/icon-upload.svg" alt="Icon upload" class="upload-image" />
-                    <div class="upload-actions hidden">
-                        <button id="btnRemove">Remove Image</button>
-                        <button id="btnChange">Change Image</button>
+                <div id="formUpload" class="mb-4">
+                    <label for="avatar" class="text-lg mb-2 block text-Neutral300">Upload Avatar</label>
+
+                    <div class="border border-dashed border-Neutral500 rounded-lg p-4 flex flex-col items-center" id="uploadAvatar">
+                        <input type="file" id="avatar" accept="image/png, image/jpeg" hidden class="file-input" />
+                        <div class="border border-Neutral500 rounded-lg bg-Neutral700 mb-4">
+                            <img src="assets/images/icon-upload.svg" alt="Icon upload" class="p-2" />
+                        </div>
+                        <div id="actionImage" class="flex items-center gap-3">
+                            <button id="btnRemove">Remove Image</button>
+                            <button id="btnChange">Change Image</button>
+                        </div>
+                        <p class="text-md text-Neutral300">Drag and drop or click to upload</p>
                     </div>
-                    <p class="upload-instructions">Drag and drop or click to upload</p>
-                </div>
-
-                <!-- Error Message -->
-                <div class="error-notice" id="errorUpload">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 16 16">
-                        <path class="circle" stroke="#D1D0D5" stroke-linecap="round" stroke-linejoin="round" d="M2 8a6 6 0 1 0 12 0A6 6 0 0 0 2 8Z" />
-                        <path class="dot" fill="#D1D0D5" d="M8.004 10.462V7.596ZM8 5.57v-.042Z" />
-                        <path class="line" stroke="#D1D0D5" stroke-linecap="round" stroke-linejoin="round" d="M8.004 10.462V7.596M8 5.569v-.042" />
-                    </svg>
-                    <small class="info-text">Upload your photo (JPG or PNG, max size: 500KB).</small>
-                </div>
-            </div>
-
-            <div class="form-group">
-                <div class="input-field" id="inputFullName">
-                    <label for="fullName">Full Name</label>
-                    <input type="text" id="fullName" required title="please fill your name" />
 
                     <!-- Error Message -->
-                    <div class="error-notice hidden" id="errorFullName">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 16 16">
-                            <path class="circle" stroke="#D1D0D5" stroke-linecap="round" stroke-linejoin="round" d="M2 8a6 6 0 1 0 12 0A6 6 0 0 0 2 8Z" />
-                            <path class="dot" fill="#D1D0D5" d="M8.004 10.462V7.596ZM8 5.57v-.042Z" />
-                            <path class="line" stroke="#D1D0D5" stroke-linecap="round" stroke-linejoin="round" d="M8.004 10.462V7.596M8 5.569v-.042" />
+                    <div class="mt-2 flex items-center" id="errorUpload">
+                        <svg class="" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 16 16">
+                            <path stroke="#8784a4" stroke-linecap="round" stroke-linejoin="round" d="M2 8a6 6 0 1 0 12 0A6 6 0 0 0 2 8Z" />
+                            <path fill="#8784a4" d="M8.004 10.462V7.596ZM8 5.57v-.042Z" />
+                            <path stroke="#8784a4" stroke-linecap="round" stroke-linejoin="round" d="M8.004 10.462V7.596M8 5.569v-.042" />
                         </svg>
-                        <small class="notice-text">Input cannot be empty.</small>
+                        <small class="ml-2 text-xs text-Neutral500">Upload your photo (JPG or PNG, max size: 500KB).</small>
                     </div>
                 </div>
 
-                <div class="input-field" id="inputEmailAddress">
-                    <label for="email">Email Address</label>
-                    <input type="email" id="email" placeholder="example@email.com" required autocomplete="email" title="please fill your email" />
+                <div class="">
+                    <div class="mb-3" id="inputFullName">
+                        <label for="fullName" class="text-lg mb-2 block text-Neutral300">Full Name</label>
+                        <input
+                            class="border border-Neutral300 focus:outline-2 focus:outline-offset-2 focus:outline-Neutral300 w-full rounded-lg p-2"
+                            type="text"
+                            id="fullName"
+                            required
+                            title="please fill your name"
+                        />
 
-                    <!-- Error Message -->
-                    <div class="error-notice hidden" id="errorEmailAddress">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 16 16">
-                            <path class="circle" stroke="#D1D0D5" stroke-linecap="round" stroke-linejoin="round" d="M2 8a6 6 0 1 0 12 0A6 6 0 0 0 2 8Z" />
-                            <path class="dot" fill="#D1D0D5" d="M8.004 10.462V7.596ZM8 5.57v-.042Z" />
-                            <path class="line" stroke="#D1D0D5" stroke-linecap="round" stroke-linejoin="round" d="M8.004 10.462V7.596M8 5.569v-.042" />
-                        </svg>
-                        <small class="notice-text">Input cannot be empty.</small>
-                    </div>
-                </div>
-
-                <div class="input-field" id="inputGithubAccount">
-                    <label for="github">GitHub Username</label>
-                    <input type="text" id="github" placeholder="@yourusername" required title="please fill your GitHub username" />
-
-                    <!-- Error Message -->
-                    <div class="error-notice hidden" id="errorGithubAccount">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 16 16">
-                            <path class="circle" stroke="#D1D0D5" stroke-linecap="round" stroke-linejoin="round" d="M2 8a6 6 0 1 0 12 0A6 6 0 0 0 2 8Z" />
-                            <path class="dot" fill="#D1D0D5" d="M8.004 10.462V7.596ZM8 5.57v-.042Z" />
-                            <path class="line" stroke="#D1D0D5" stroke-linecap="round" stroke-linejoin="round" d="M8.004 10.462V7.596M8 5.569v-.042" />
-                        </svg>
-                        <small class="notice-text">Input cannot be empty.</small>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Button generate -->
-            <div class="form-submit-wrapper">
-                <button id="generate">Generate My Ticket</button>
-            </div>
-        </div>
-        <!-- Form ends -->
-
-        <!-- Generated tickets starts -->
-        <div class="result-container hidden" id="generatorResult">
-            <h1 class="result-title">Congrats, <span id="firstName">Budi</span> <span id="lastName">Kapal</span>! Your ticket is ready.</h1>
-            <p class="result-description">
-                We've emailed your ticket to <span id="userEmail">budikapallaut@gmail.com</span> and will send updates in the run up to the event.
-            </p>
-
-            <div class="ticket-card">
-                <img src="assets/images/pattern-ticket.svg" alt="" class="ticket-bg-pattern" />
-                <div class="ticket-content">
-                    <div class="ticket-header">
-                        <img class="ticket-logo" src="./assets/images/logo-full.svg" alt="" />
-                        <p class="ticket-event-date">Jan 31, 2025 <span class="event-location">/ Austin, TX</span></p>
-                    </div>
-
-                    <div class="ticket-body">
-                        <img id="userAvatar" src="assets/images/image-avatar.jpg" alt="Image user ticket" width="48" height="48" />
-                        <div class="user-details">
-                            <h3 class="user-fullname">Budi Kapal Laut</h3>
-                            <div class="user-github-handle">
-                                <img src="./assets/images/icon-github.svg" alt="" />
-                                <p class="github-username">@kapallaut</p>
-                            </div>
+                        <!-- Error Message -->
+                        <div class="mt-2 flex items-center" id="errorFullName">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 16 16">
+                                <path stroke="#f57261" stroke-linecap="round" stroke-linejoin="round" d="M2 8a6 6 0 1 0 12 0A6 6 0 0 0 2 8Z" />
+                                <path fill="#f57261" d="M8.004 10.462V7.596ZM8 5.57v-.042Z" />
+                                <path stroke="#f57261" stroke-linecap="round" stroke-linejoin="round" d="M8.004 10.462V7.596M8 5.569v-.042" />
+                            </svg>
+                            <small class="ml-2 text-xs text-Orange500">Input cannot be empty.</small>
                         </div>
                     </div>
 
-                    <div class="ticket-number">
-                        <div id="number">090909#</div>
+                    <div class="mb-3" id="inputEmailAddress">
+                        <label for="email" class="text-lg mb-2 block text-Neutral300">Email Address</label>
+                        <input
+                            class="border border-Neutral300 focus:outline-2 focus:outline-offset-2 focus:outline-Neutral300 w-full rounded-lg p-2"
+                            type="email"
+                            id="email"
+                            placeholder="example@email.com"
+                            required
+                            autocomplete="email"
+                            title="please fill your email"
+                        />
+
+                        <!-- Error Message -->
+                        <div class="mt-2 mb-4 flex items-center" id="errorEmailAddress">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 16 16">
+                                <path stroke="#f57261" stroke-linecap="round" stroke-linejoin="round" d="M2 8a6 6 0 1 0 12 0A6 6 0 0 0 2 8Z" />
+                                <path fill="#f57261" d="M8.004 10.462V7.596ZM8 5.57v-.042Z" />
+                                <path stroke="#f57261" stroke-linecap="round" stroke-linejoin="round" d="M8.004 10.462V7.596M8 5.569v-.042" />
+                            </svg>
+                            <small class="ml-2 text-xs text-Orange500">Input cannot be empty.</small>
+                        </div>
+                    </div>
+
+                    <div class="mb-3" id="inputGithubAccount">
+                        <label for="github" class="text-lg mb-2 block text-Neutral300">GitHub Username</label>
+                        <input
+                            class="border border-Neutral300 focus:outline-2 focus:outline-offset-2 focus:outline-Neutral300 w-full rounded-lg p-2"
+                            type="text"
+                            id="github"
+                            placeholder="@yourusername"
+                            required
+                            title="please fill your GitHub username"
+                        />
+
+                        <!-- Error Message -->
+                        <div class="mt-2 flex items-center" id="errorGithubAccount">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 16 16">
+                                <path stroke="#f57261" stroke-linecap="round" stroke-linejoin="round" d="M2 8a6 6 0 1 0 12 0A6 6 0 0 0 2 8Z" />
+                                <path fill="#f57261" d="M8.004 10.462V7.596ZM8 5.57v-.042Z" />
+                                <path stroke="#f57261" stroke-linecap="round" stroke-linejoin="round" d="M8.004 10.462V7.596M8 5.569v-.042" />
+                            </svg>
+                            <small class="ml-2 text-xs text-Orange500">Input cannot be empty.</small>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <!-- Generated tickets ends -->
-        </div>
 
-        <div class="footer-attribution">
-            Challenge by
-            <a href="https://www.frontendmentor.io?ref=challenge" class="provider">Frontend Mentor</a>. Coded by <a href="#" class="coder">Inori Dokusha</a>.
-        </div>
+                <!-- Button generate -->
+                <div class="w-full mt-6 border">
+                    <button id="generate" class="border py-2 w-full">Generate My Ticket</button>
+                </div>
+            </form>
+            <!-- Form ends -->
+
+            <div id="ticket"></div>
+        </main>
+
+        <footer class="mt-7">
+            <div class="footer-attribution">
+                Challenge by
+                <a href="https://www.frontendmentor.io?ref=challenge" class="provider">Frontend Mentor</a>. Coded by
+                <a href="#" class="coder">Inori Dokusha</a>.
+            </div>
+        </footer>
 
         <!-- Script  path-->
         <script src="src/script.js" type="module" defer></script>

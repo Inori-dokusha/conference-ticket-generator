@@ -16,7 +16,6 @@ const emailInput = document.querySelector("#email");
 const githubInput = document.querySelector("#github");
 
 // Get element to show error message
-const noticeText = document.querySelector(".notice-text");
 const infoText = document.querySelector(".info-text");
 const noticeIcon = document.querySelectorAll("#errorUpload svg path");
 
@@ -28,7 +27,6 @@ const uploadInstructions = document.querySelector(".upload-instructions");
 // Get element to show result
 const ticketResult = document.querySelector("#generatorResult");
 const fullName = document.querySelector(".user-fullname");
-const ticketDate = document.querySelector(".ticket-date");
 const userAvatar = document.querySelector("#userAvatar");
 const firstName = document.querySelector("#firstName");
 const lastName = document.querySelector("#lastName");
@@ -61,11 +59,11 @@ function clickInputFile() {
     inputFile.click();
 }
 
-function handleFiles(e) {
+function handleFiles() {
     const file = this.files[0];
-    
+
     if (!file) return;
-    
+
     checkFileSize(file);
 }
 
@@ -80,13 +78,13 @@ function dragleave() {
 
 function drop(e) {
     e.preventDefault();
-    
+
     uploadAvatar.classList.remove("focus");
-    
+
     const file = e.dataTransfer.files[0];
-    
+
     if (!file) return;
-    
+
     checkFileSize(file);
 }
 
@@ -109,11 +107,11 @@ let url;
 function updateImage(file) {
     // Create a URL for the uploaded file
     url = URL.createObjectURL(file);
-    
+
     // Update the image source to the uploaded file
     uploadImage.src = url;
     uploadImage.style.padding = "0";
-    
+
     // Hide the upload instructions and show the remove button
     uploadInstructions.classList.add("hidden");
     uploadAvatar.querySelector(".upload-actions").classList.remove("hidden");
@@ -121,13 +119,13 @@ function updateImage(file) {
 
 // Remove avatar
 function removeImage() {
-    inputFile.value = '';
+    inputFile.value = "";
     URL.revokeObjectURL(url);
-    
+
     // Reset url of image to default and add padding
     uploadImage.src = defaultUrl;
     uploadImage.style.padding = "0.5rem";
-    
+
     // Hide the remove button and show the upload instructions
     uploadAvatar.querySelector(".upload-actions").classList.add("hidden");
     uploadInstructions.classList.remove("hidden");
@@ -143,9 +141,9 @@ function changeImage() {
     input.addEventListener("input", (e) => {
         const regexEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         const checkNumberOnString = /\d+/g;
-        
+
         if (!e || !e.target) return;
-        
+
         // full name
         if (e.target.id === "fullName") {
             if (e.target.value.trim() === "" || checkNumberOnString.test(e.target.value)) {
@@ -154,7 +152,7 @@ function changeImage() {
                 resetError();
             }
         }
-        
+
         // email
         if (e.target.id === "email") {
             if (!regexEmail.test(e.target.value) || e.target.value.trim() === "") {
@@ -163,7 +161,7 @@ function changeImage() {
                 resetError();
             }
         }
-        
+
         // github
         if (e.target.id === "github") {
             if (e.target.value.trim() === "" || e.target.value.includes(" ")) {
@@ -179,12 +177,12 @@ function changeImage() {
 function checkInputValue() {
     // Get value
     const [inputName, inputEmail, inputGithub] = [fullNameInput.value, emailInput.value, githubInput.value];
-    
+
     if (updateImage.src === defaultUrl && inputName === "" && inputEmail === "" && inputGithub === "") {
         showError(true, "", "inputFullName", "inputEmail", "inputGithub");
         return false;
     }
-    
+
     if (uploadImage.src === defaultUrl) {
         showError(true, "");
         return false;
@@ -205,40 +203,40 @@ function checkInputValue() {
 // Generate ticket
 function generateTicket() {
     const result = checkInputValue();
-    
+
     if (!result) return;
-    
+
     const [inputName, inputEmail, inputGithub] = result;
-    
+
     // Destructure the result array to get name, email, and GitHub account
     const name = inputName;
     const email = inputEmail;
     const githubAccount = inputGithub;
-    
+
     // Split the name into an array of words and get the first two words as the first and last name
     let splitName = name.split(" ");
-    
+
     // Just take index 0 and 1 from the array
     firstName.textContent = splitName.slice(0, 1);
     lastName.textContent = splitName.slice(1, 2);
-    
+
     // Format the date options
     const option = {
         year: "numeric",
         month: "short",
         day: "numeric",
     };
-    
+
     // Get the current date and format it using the specified options
     const date = new Date().toLocaleDateString("en-US", option);
-    
+
     // Hide the ticket form and show the generator result
     ticketForm.classList.add("hidden");
     ticketResult.classList.remove("hidden");
-    
+
     // Get the user avatar from local storage
     userAvatar.src = uploadImage.src;
-    
+
     // Update the text content
     fullName.textContent = name;
     userEmail.textContent = email;
@@ -266,7 +264,7 @@ function showError(errorUpload = false, message = "", ...elementsID) {
             infoText.textContent = messageError.fileLarge;
         }
     }
-    
+
     // For message
     if (message === "name") {
         errorInputFullName.querySelector(".notice-text").textContent = messageError.nameError;
@@ -275,7 +273,7 @@ function showError(errorUpload = false, message = "", ...elementsID) {
     } else if (message === "github") {
         errorInputGithub.querySelector(".notice-text").textContent = messageError.githubError;
     }
-    
+
     // For input fields
     elementsID.forEach((id) => {
         if (id === "inputFullName") {
@@ -294,14 +292,14 @@ function showError(errorUpload = false, message = "", ...elementsID) {
 // Reset error messages
 function resetError() {
     noticeIcon.forEach((icon) => icon.classList.remove("error-icon"));
-    
+
     infoText.textContent = messageError.defaultMessageUpload;
-    
+
     infoText.classList.remove("error-text");
     errorInputFullName.classList.add("hidden");
     errorInputEmail.classList.add("hidden");
     errorInputGithub.classList.add("hidden");
-    
+
     // Remove error input border
     fullNameInput.classList.remove("error-input");
     emailInput.classList.remove("error-input");
