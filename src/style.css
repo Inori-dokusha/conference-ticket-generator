@@ -1,8 +1,8 @@
 /* Fonts Family */
 @font-face {
-    font-family: "Inconsolata", sans-serif;
-    src: url("/assets/fonts/Inconsolata-VariableFont_wdth\,wght.ttf") format("ttf");
-    font-weight: 100 900;
+    font-family: "Inconsolata";
+    src: url("../assets/fonts/Inconsolata-VariableFont.woff2") format("woff2");
+    font-weight: 400 800;
     font-style: normal;
 }
 
@@ -10,7 +10,7 @@
 
 @theme {
     /* Font */
-    --font-sans: "Inconsolata";
+    --font-inconsolata: "Inconsolata", sans-serif;
 
     /*Colors*/
     --color-Neutral0: hsl(0, 0%, 100%);
