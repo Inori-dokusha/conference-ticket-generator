@@ -119,7 +119,7 @@ function updateImage(file) {
 
   // Hide the upload instructions and show the remove button
   uploadInstructions.classList.add("hidden");
-  uploadAvatar.querySelector(".upload-actions").classList.remove("hidden");
+  uploadAvatar.querySelector("#actionImage").classList.remove("hidden");
 }
 
 // Remove avatar
@@ -132,7 +132,7 @@ function removeImage() {
   uploadImage.style.padding = "0.5rem";
 
   // Hide the remove button and show the upload instructions
-  uploadAvatar.querySelector(".upload-actions").classList.add("hidden");
+  uploadAvatar.querySelector("#actionImage").classList.add("hidden");
   uploadInstructions.classList.remove("hidden");
 }
 
@@ -141,12 +141,12 @@ function changeImage() {
   inputFile.click();
 }
 
-// Check input is typing
+// Check input while is typing
 [fullNameInput, emailInput, githubInput].forEach(input => {
+  const regexEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  const checkNumberOnString = /\d+/g;
+  
   input.addEventListener("input", e => {
-    const regexEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    const checkNumberOnString = /\d+/g;
-
     if (!e || !e.target) return;
 
     // full name
@@ -178,7 +178,7 @@ function changeImage() {
   });
 });
 
-// Check value of input
+// Check value of input while the button on click
 function checkInputValue() {
   // Get value
   const [inputName, inputEmail, inputGithub] = [fullNameInput.value, emailInput.value, githubInput.value];
@@ -223,10 +223,6 @@ function generateTicket() {
   // Split the name into an array of words and get the first two words as the first and last name
   let splitName = name.split(" ");
 
-  // Just take index 0 and 1 from the array
-  firstName.textContent = splitName.slice(0, 1);
-  lastName.textContent = splitName.slice(1, 2);
-
   // Format the date options
   const option = {
     year: "numeric",
@@ -241,25 +237,17 @@ function generateTicket() {
   ticketForm.classList.add("hidden");
   ticketResult.classList.remove("hidden");
 
-  // Get the user avatar from local storage
-  userAvatar.src = uploadImage.src;
+  const randomNum = Math.floor(Math.random() * 90000 + 10000);
 
-  // Update the text content
-  fullName.textContent = name;
-  userEmail.textContent = email;
-  githubUsername.textContent = `@${githubAccount.toLowerCase()}`;
-  ticketEventDate.textContent = `${date} / Austin, TX`;
-  ticketNumber = Math.floor(Math.random() * 90000 + 10000);
-  
   ticket({
-    firstName: firstName,
-    lastName: lastName,
+    firstName: splitName.slice(0, 1),
+    lastName: splitName.slice(1, 2),
     emailAndreass: email,
     eventDate: date,
     userAvatar: uploadImage.src,
     fullName: name,
     githubAccount: githubAccount.toLowerCase(),
-    eventNumber: ticketNumber + '#'
+    eventNumber: randomNum + "#"
   });
 }
 
