@@ -1,8 +1,3 @@
-import ticket from "./ticket.js";
-
-// Ticket
-const app = document.querySelector("#ticket");
-
 // Get element generator button
 const generateTicketButton = document.querySelector("#generate");
 
@@ -74,17 +69,17 @@ function handleFiles() {
 
 function dragover(e) {
   e.preventDefault();
-  uploadAvatar.classList.add("outline");
+  uploadAvatar.classList.add("outline-2", "outline-offset-4");
 }
 
 function dragleave() {
-  uploadAvatar.classList.remove("focus");
+  uploadAvatar.classList.remove("outline-2", "outline-offset-4");
 }
 
 function drop(e) {
   e.preventDefault();
 
-  uploadAvatar.classList.remove("focus");
+  uploadAvatar.classList.remove("outline-2", "outline-offset-4");
 
   const file = e.dataTransfer.files[0];
 
@@ -115,7 +110,7 @@ function updateImage(file) {
 
   // Update the image source to the uploaded file
   uploadImage.src = url;
-  uploadImage.style.padding = "0";
+  uploadImage.classList.remove("p-2");
 
   // Hide the upload instructions and show the remove button
   uploadInstructions.classList.add("hidden");
@@ -141,71 +136,21 @@ function changeImage() {
   inputFile.click();
 }
 
-// Check input while is typing
-[fullNameInput, emailInput, githubInput].forEach(input => {
-  const regexEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  const checkNumberOnString = /\d+/g;
-  
-  input.addEventListener("input", e => {
-    if (!e || !e.target) return;
-
-    // full name
-    if (e.target.id === "fullName") {
-      if (e.target.value.trim() === "" || checkNumberOnString.test(e.target.value)) {
-        showError(false, "name", "inputFullName");
-      } else {
-        resetError();
-      }
-    }
-
-    // email
-    if (e.target.id === "email") {
-      if (!regexEmail.test(e.target.value) || e.target.value.trim() === "") {
-        showError(false, "email", "inputEmail");
-      } else {
-        resetError();
-      }
-    }
-
-    // github
-    if (e.target.id === "github") {
-      if (e.target.value.trim() === "" || e.target.value.includes(" ")) {
-        showError(false, "github", "inputGithub");
-      } else {
-        resetError();
-      }
-    }
-  });
-});
-
 // Check value of input while the button on click
 function checkInputValue() {
+  const regexEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  const checkNumberOnString = /\d+/g;
+
   // Get value
   const [inputName, inputEmail, inputGithub] = [fullNameInput.value, emailInput.value, githubInput.value];
 
-  if (updateImage.src === defaultUrl && inputName === "" && inputEmail === "" && inputGithub === "") {
+  if (uploadImage.src === defaultUrl||inputName === "" || inputEmail === "" || inputGithub === "") {
     showError(true, "", "inputFullName", "inputEmail", "inputGithub");
-    return false;
-  }
-
-  if (uploadImage.src === defaultUrl) {
-    showError(true, "");
-    return false;
-  } else if (inputName === "") {
-    showError(false, "", "inputFullName");
-    return false;
-  } else if (inputEmail === "") {
-    showError(false, "", "inputEmail");
-    return false;
-  } else if (inputGithub === "") {
-    showError(false, "", "inputGithub");
     return false;
   } else {
     return [inputName, inputEmail, inputGithub];
   }
 }
-
-// app.innerHTML = ticket()
 
 // Generate ticket
 function generateTicket() {
@@ -235,20 +180,19 @@ function generateTicket() {
 
   // Hide the ticket form and show the generator result
   ticketForm.classList.add("hidden");
-  ticketResult.classList.remove("hidden");
 
+  // Generate random number
   const randomNum = Math.floor(Math.random() * 90000 + 10000);
 
-  ticket({
-    firstName: splitName.slice(0, 1),
-    lastName: splitName.slice(1, 2),
-    emailAndreass: email,
-    eventDate: date,
-    userAvatar: uploadImage.src,
-    fullName: name,
-    githubAccount: githubAccount.toLowerCase(),
-    eventNumber: randomNum + "#"
-  });
+  // Generate the ticket
+  firstName = splitName.slice(0, 1);
+  lastName = splitName.slice(1, 2);
+  emailAndreass = email;
+  eventDate = date;
+  userAvatar = uploadImage.src;
+  fullName = name;
+  githubAccount = githubAccount.toLowerCase();
+  eventNumber = randomNum + "#";
 }
 
 // Message for file upload and input fields
@@ -264,8 +208,8 @@ const messageError = {
 function showError(errorUpload = false, message = "", ...elementsID) {
   // For file upload
   if (errorUpload) {
-    infoText.classList.add("error-text");
-    noticeIcon.forEach(icon => icon.classList.add("error-icon"));
+    infoText.classList.add("text-orange-500");
+    noticeIcon.forEach(icon => icon.classList.add("stroke-orange-500"));
     if (message === "fileLarge") {
       infoText.textContent = messageError.fileLarge;
     }
@@ -273,41 +217,44 @@ function showError(errorUpload = false, message = "", ...elementsID) {
 
   // For message
   if (message === "name") {
-    errorInputFullName.querySelector(".notice-text").textContent = messageError.nameError;
+    errorInputFullName.querySelector("#errorMessage").textContent = messageError.nameError;
   } else if (message === "email") {
-    errorInputEmail.querySelector(".notice-text").textContent = messageError.emailError;
+    errorInputEmail.querySelector("#errorMessage").textContent = messageError.emailError;
   } else if (message === "github") {
-    errorInputGithub.querySelector(".notice-text").textContent = messageError.githubError;
+    errorInputGithub.querySelector("#errorMessage").textContent = messageError.githubError;
   }
 
   // For input fields
   elementsID.forEach(id => {
     if (id === "inputFullName") {
       errorInputFullName.classList.remove("hidden");
-      fullNameInput.classList.add("error-input");
+      errorInputFullName.classList.add("flex");
+      fullNameInput.classList.add("border-orange-500");
     } else if (id === "inputEmail") {
       errorInputEmail.classList.remove("hidden");
-      emailInput.classList.add("error-input");
+      errorInputEmail.classList.add("flex");
+      emailInput.classList.add("border-orange-500");
     } else if (id === "inputGithub") {
       errorInputGithub.classList.remove("hidden");
-      githubInput.classList.add("error-input");
+      errorInputGithub.classList.add("flex");
+      githubInput.classList.add("border-orange-500");
     }
   });
 }
 
 // Reset error messages
 function resetError() {
-  noticeIcon.forEach(icon => icon.classList.remove("error-icon"));
+  noticeIcon.forEach(icon => icon.classList.remove("stroke-orange-500"));
 
   infoText.textContent = messageError.defaultMessageUpload;
+  infoText.classList.remove("text-orange-500");
 
-  infoText.classList.remove("error-text");
   errorInputFullName.classList.add("hidden");
   errorInputEmail.classList.add("hidden");
   errorInputGithub.classList.add("hidden");
 
   // Remove error input border
-  fullNameInput.classList.remove("error-input");
-  emailInput.classList.remove("error-input");
-  githubInput.classList.remove("error-input");
+  fullNameInput.classList.remove("border-orange-500");
+  emailInput.classList.remove("border-orange-500");
+  githubInput.classList.remove("border-orange-500");
 }

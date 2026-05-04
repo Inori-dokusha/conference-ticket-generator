@@ -10,129 +10,177 @@
     <link rel="stylesheet" href="src/main.css" />
   </head>
 
-  <body class="font-inconsolata text-Neutral0 p-5 bg-[url(../assets/images/background-mobile.png)]">
+  <body
+    class="relative font-inconsolata text-neutral-300 p-5 bg-center bg-cover bg-fixed bg-[url(../assets/images/background-mobile.png)] md:bg-[url(../assets/images/background-desktop.png)]"
+  >
+    <div class="absolute top-0 bottom-0 left-0 right-0 -z-20 bg-fixed bg-[url(../assets/images/pattern-lines.svg)]"></div>
+    <div
+      class="absolute top-0 right-0 -z-10 after:size-80 bg-contain bg-no-repeat bg-[url(../assets/images/pattern-squiggly-line-bottom-mobile-tablet.svg)]"
+    ></div>
+
     <header class="mt-3 mb-10 flex w-full">
-      <img class="mx-auto w-1/2" src="assets/images/logo-full.svg" alt="Header Logo" />
+      <img class="mx-auto max-h-5 min-h-5" src="assets/images/logo-full.svg" alt="Header Logo" />
     </header>
 
-    <!-- Main Content -->
-    <main class="">
+    <main>
       <!-- Form starts -->
-      <div class="" id="ticketForm">
-        <div class="text-center mb-4">
-          <h1 class="text-3xl font-bold mb-4">Your Journey to Coding Conf 2025 Starts Here!</h1>
-          <p class="text-xl text-Neutral300">Secure your spot at next year's biggest coding conference.</p>
+      <div id="ticketForm" class="block">
+        <div class="text-center mb-4 mx-auto w-full md:w-2xl">
+          <h1 class="text-4xl md:text-6xl lg:text-8xl font-bold mb-4">Your Journey to Coding Conf 2025 Starts Here!</h1>
+          <p class="text-xl md:text-2xl text-neutral-300">Secure your spot at next year's biggest coding conference.</p>
         </div>
 
-        <div id="formUpload" class="mb-4">
-          <label for="avatar" class="text-lg mb-2 block text-Neutral300">Upload Avatar</label>
+        <div class="mx-auto max-w-96">
+          <div id="formUpload" class="mb-4 bg-n">
+            <label for="avatar" class="text-lg mb-2 block text-neutral-300">Upload Avatar</label>
 
-          <div class="border border-dashed border-Neutral500 rounded-lg p-4 flex flex-col items-center" id="uploadAvatar">
-            <input type="file" id="avatar" accept="image/png, image/jpeg" hidden class="file-input" />
-            <div class="border border-Neutral500 rounded-lg bg-Neutral700 mb-4 overflow-hidden">
-              <img id="uploadImage" src="assets/images/icon-upload.svg" alt="Icon upload" class="p-2 bg-fixed w-[50px] h-[50px]" />
+            <div class="border border-dashed border-neutral-500 cursor-pointer rounded-lg p-4 flex flex-col items-center" id="uploadAvatar">
+              <input type="file" id="avatar" accept="image/png, image/jpeg" hidden class="file-input" />
+              <div class="border border-neutral-500 rounded-lg bg-neutral-700 mb-4 overflow-hidden">
+                <img id="uploadImage" src="assets/images/icon-upload.svg" alt="Icon upload" class="p-2 bg-fixed w-12.5 h-12.5" />
+              </div>
+              <div id="actionImage" class="hidden items-center gap-3">
+                <button id="btnRemove" class="px-2 py-1 rounded-md bg-neutral-700 text-sm underline cursor-pointer">Remove Image</button>
+                <button id="btnChange" class="px-2 py-1 rounded-md bg-neutral-700 text-sm cursor-pointer">Change Image</button>
+              </div>
+              <p id="uploadInstructions" class="text-md text-center text-neutral-300">Drag and drop or click to upload</p>
             </div>
-            <div id="actionImage" class="hidden items-center gap-3">
-              <button id="btnRemove" class="px-2 py-1 rounded-md bg-Neutral700 text-sm">Remove Image</button>
-              <button id="btnChange" class="px-2 py-1 rounded-md bg-Neutral700 text-sm">Change Image</button>
-            </div>
-            <p id="uploadInstructions" class="text-md text-Neutral300">Drag and drop or click to upload</p>
-          </div>
-
-          <!-- Error Message -->
-          <div class="mt-2 flex items-center" id="errorUpload">
-            <svg class="" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 16 16">
-              <path stroke="#8784a4" stroke-linecap="round" stroke-linejoin="round" d="M2 8a6 6 0 1 0 12 0A6 6 0 0 0 2 8Z" />
-              <path fill="#8784a4" d="M8.004 10.462V7.596ZM8 5.57v-.042Z" />
-              <path stroke="#8784a4" stroke-linecap="round" stroke-linejoin="round" d="M8.004 10.462V7.596M8 5.569v-.042" />
-            </svg>
-            <small id="info" class="ml-2 text-xs text-Neutral500">Upload your (JPG or PNG, max size: 500KB).</small>
-          </div>
-        </div>
-
-        <div class="">
-          <div class="mb-3" id="inputFullName">
-            <label for="fullName" class="text-lg mb-2 block text-Neutral300">Full Name</label>
-            <input
-              class="border border-Neutral300 focus:outline-2 focus:outline-offset-2 focus:outline-Neutral300 w-full rounded-lg p-3"
-              type="text"
-              id="fullName"
-              required
-              title="please fill your name"
-            />
 
             <!-- Error Message -->
-            <div class="mt-2 flex items-center hidden" id="errorFullName">
+            <div class="mt-2 flex items-center" id="errorUpload">
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 16 16">
-                <path stroke="#f57261" stroke-linecap="round" stroke-linejoin="round" d="M2 8a6 6 0 1 0 12 0A6 6 0 0 0 2 8Z" />
-                <path fill="#f57261" d="M8.004 10.462V7.596ZM8 5.57v-.042Z" />
-                <path stroke="#f57261" stroke-linecap="round" stroke-linejoin="round" d="M8.004 10.462V7.596M8 5.569v-.042" />
+                <path stroke="#8784a4" stroke-linecap="round" stroke-linejoin="round" d="M2 8a6 6 0 1 0 12 0A6 6 0 0 0 2 8Z" />
+                <path fill="#8784a4" d="M8.004 10.462V7.596ZM8 5.57v-.042Z" />
+                <path stroke="#8784a4" stroke-linecap="round" stroke-linejoin="round" d="M8.004 10.462V7.596M8 5.569v-.042" />
               </svg>
-              <small class="ml-2 text-xs text-Orange500">Input cannot be empty.</small>
+              <small id="info" class="ml-2 text-xs text-neutral-500">Upload your photo (JPG or PNG, max size: 500KB).</small>
             </div>
           </div>
 
-          <div class="mb-3" id="inputEmailAddress">
-            <label for="email" class="text-lg mb-2 block text-Neutral300">Email Address</label>
-            <input
-              class="border border-Neutral300 focus:outline-2 focus:outline-offset-2 focus:outline-Neutral300 w-full rounded-lg p-3"
-              type="email"
-              id="email"
-              placeholder="example@email.com"
-              required
-              autocomplete="email"
-              title="please fill your email"
-            />
+          <div>
+            <div class="mb-3" id="inputFullName">
+              <label for="fullName" class="text-lg mb-2 block text-neutral-300">Full Name</label>
+              <input
+                class="border border-neutral-300 cursor-pointer focus:outline-2 focus:outline-offset-2 focus:outline-neutral-300 w-full rounded-lg p-3"
+                type="text"
+                id="fullName"
+                required
+                title="please fill your name"
+              />
 
-            <!-- Error Message -->
-            <div class="mt-2 mb-4 flex items-center hidden" id="errorEmailAddress">
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 16 16">
-                <path stroke="#f57261" stroke-linecap="round" stroke-linejoin="round" d="M2 8a6 6 0 1 0 12 0A6 6 0 0 0 2 8Z" />
-                <path fill="#f57261" d="M8.004 10.462V7.596ZM8 5.57v-.042Z" />
-                <path stroke="#f57261" stroke-linecap="round" stroke-linejoin="round" d="M8.004 10.462V7.596M8 5.569v-.042" />
-              </svg>
-              <small class="ml-2 text-xs text-Orange500">Input cannot be empty.</small>
+              <!-- Error Message -->
+              <div class="mt-2 items-center hidden" id="errorFullName">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 16 16">
+                  <path stroke="#f57261" stroke-linecap="round" stroke-linejoin="round" d="M2 8a6 6 0 1 0 12 0A6 6 0 0 0 2 8Z" />
+                  <path fill="#f57261" d="M8.004 10.462V7.596ZM8 5.57v-.042Z" />
+                  <path stroke="#f57261" stroke-linecap="round" stroke-linejoin="round" d="M8.004 10.462V7.596M8 5.569v-.042" />
+                </svg>
+                <small id="errorMessage" class="ml-2 text-xs text-orange-500">Input cannot be empty.</small>
+              </div>
+            </div>
+
+            <div class="mb-3" id="inputEmailAddress">
+              <label for="email" class="text-lg mb-2 block text-neutral-300">Email Address</label>
+              <input
+                class="border border-neutral-300 cursor-pointer focus:outline-2 focus:outline-offset-2 focus:outline-neutral-300 w-full rounded-lg p-3"
+                type="email"
+                id="email"
+                placeholder="example@email.com"
+                required
+                autocomplete="email"
+                title="please fill your email"
+              />
+
+              <!-- Error Message -->
+              <div class="mt-2 mb-4 items-center hidden" id="errorEmailAddress">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 16 16">
+                  <path stroke="#f57261" stroke-linecap="round" stroke-linejoin="round" d="M2 8a6 6 0 1 0 12 0A6 6 0 0 0 2 8Z" />
+                  <path fill="#f57261" d="M8.004 10.462V7.596ZM8 5.57v-.042Z" />
+                  <path stroke="#f57261" stroke-linecap="round" stroke-linejoin="round" d="M8.004 10.462V7.596M8 5.569v-.042" />
+                </svg>
+                <small id="errorMessage" class="ml-2 text-xs text-orange-500">Input cannot be empty.</small>
+              </div>
+            </div>
+
+            <div class="mb-3" id="inputGithubAccount">
+              <label for="github" class="text-lg mb-2 block text-neutral-300">GitHub Username</label>
+              <input
+                class="border border-neutral-300 cursor-pointer focus:outline-2 focus:outline-offset-2 focus:outline-neutral-300 w-full rounded-lg p-3"
+                type="text"
+                id="github"
+                placeholder="@yourusername"
+                required
+                title="please fill your GitHub username"
+              />
+
+              <!-- Error Message -->
+              <div class="mt-2 items-center hidden" id="errorGithubAccount">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 16 16">
+                  <path stroke="#f57261" stroke-linecap="round" stroke-linejoin="round" d="M2 8a6 6 0 1 0 12 0A6 6 0 0 0 2 8Z" />
+                  <path fill="#f57261" d="M8.004 10.462V7.596ZM8 5.57v-.042Z" />
+                  <path stroke="#f57261" stroke-linecap="round" stroke-linejoin="round" d="M8.004 10.462V7.596M8 5.569v-.042" />
+                </svg>
+                <small id="errorMessage" class="ml-2 text-xs text-orange-500">Input cannot be empty.</small>
+              </div>
             </div>
           </div>
 
-          <div class="mb-3" id="inputGithubAccount">
-            <label for="github" class="text-lg mb-2 block text-Neutral300">GitHub Username</label>
-            <input
-              class="border border-Neutral300 focus:outline-2 focus:outline-offset-2 focus:outline-Neutral300 w-full rounded-lg p-3"
-              type="text"
-              id="github"
-              placeholder="@yourusername"
-              required
-              title="please fill your GitHub username"
-            />
-
-            <!-- Error Message -->
-            <div class="mt-2 flex items-center hidden" id="errorGithubAccount">
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 16 16">
-                <path stroke="#f57261" stroke-linecap="round" stroke-linejoin="round" d="M2 8a6 6 0 1 0 12 0A6 6 0 0 0 2 8Z" />
-                <path fill="#f57261" d="M8.004 10.462V7.596ZM8 5.57v-.042Z" />
-                <path stroke="#f57261" stroke-linecap="round" stroke-linejoin="round" d="M8.004 10.462V7.596M8 5.569v-.042" />
-              </svg>
-              <small class="ml-2 text-xs text-Orange500">Input cannot be empty.</small>
-            </div>
+          <!-- Button generate -->
+          <div class="w-full mt-6">
+            <button id="generate" class="block text-center py-3 w-full bg-orange-500 rounded-lg cursor-pointer hover:bg-orange-700 active:bg-orange-700">
+              Generate My Ticket
+            </button>
           </div>
-        </div>
-
-        <!-- Button generate -->
-        <div class="w-full mt-6">
-          <button id="generate" class="block text-center py-3 w-full bg-Orange500 rounded-lg hover:bg-Orange700 active:bg-Orange700">Generate My Ticket</button>
         </div>
       </div>
       <!-- Form ends -->
 
-      <div id="ticket"></div>
+      <div class="hidden" id="generatorResult">
+        <div class="text-center mb-8">
+          <h1 class="text-4xl md:text-6xl lg:text-8xl font-bold mb-4">
+            Congrats, <span id="firstName">firstName</span> <span id="lastName">Kapal</span>! Your ticket is ready.
+          </h1>
+          <p class="text-xl md:text-2xl text-neutral-300">
+            We've emailed your ticket to <span id="userEmail" class="text-orange-500">emailAndress</span> and will send updates in the run up to the event.
+          </p>
+        </div>
+
+        <div class="relative flex flex-col justify-center gap-5 mx-auto w-82.5">
+          <img src="assets/images/pattern-ticket.svg" alt="logo" class="absolute" />
+          <div class="p-4">
+            <div class="flex items-start gap-2">
+              <img class="" src="../assets/images/logo-mark.svg" alt="Logo" width="30" height="30" />
+              <div class="">
+                <span class="block font-bold text-3xl -translate-y-1.25">Coding Conf</span>
+                <span class="block mt-px text-md text-neutral-500">Jan 21, 2025 <span class="event-location">/ Austin, TX</span></span>
+              </div>
+            </div>
+
+            <di v class="flex items-center gap-2 mt-5">
+              <div class="w-12 h-12 overflow-hidden rounded-lg">
+                <img id="userAvatar" src="../assets/images/image-avatar.jpg" alt="Image user ticket" />
+              </div>
+              <div class="flex flex-col justify-center">
+                <h3 class="text-xl">fullName</h3>
+                <div class="flex items-center">
+                  <img src="../assets/images/icon-github.svg" alt="Github Icon" width="16" height="16" />
+                  <p class="text-md text-neutral-500 ml-1.25">@githubAccount</p>
+                </div>
+              </div>
+            </di>
+          </div>
+          <div class="absolute top-0 bottom-0 right-0 flex items-center h-full">
+            <span id="number" class="text-2xl text-neutral-500 font-bold translate-x-1 rotate-90">#567543</span>
+          </div>
+        </div>
+      </div>
     </main>
 
     <footer class="mt-7 text-center">
       <div class="text-sm">
         Challenge by
-        <a href="https://www.frontendmentor.io?ref=challenge" class="text-Orange500">Frontend Mentor</a>. Coded by
-        <a href="#" class="text-Orange500">Inori Dokusha</a>.
+        <a href="https://www.frontendmentor.io?ref=challenge" class="text-orange-500">Frontend Mentor</a>. Coded by
+        <a href="#" class="text-orange-500">Inori Dokusha</a>.
       </div>
     </footer>
 
