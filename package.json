@@ -1,9 +1,10 @@
 {
-    "dependencies": {
-        "@tailwindcss/cli": "^4.2.2",
-        "tailwindcss": "^4.2.2"
-    },
-    "scripts": {
-        "tw:watch": "npx @tailwindcss/cli -i ./src/style.css -o ./src/main.css --watch"
-    }
+  "dependencies": {
+    "@tailwindcss/cli": "^4.2.2",
+    "dayjs": "^1.11.20",
+    "tailwindcss": "^4.2.2"
+  },
+  "scripts": {
+    "tw:watch": "npx @tailwindcss/cli -i ./src/styles/style.css -o ./src/styles/main.css --watch"
+  }
 }
