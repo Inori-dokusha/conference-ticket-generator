@@ -1,7 +1,6 @@
 {
   "dependencies": {
     "@tailwindcss/cli": "^4.2.2",
-    "dayjs": "^1.11.20",
     "tailwindcss": "^4.2.2"
   },
   "scripts": {

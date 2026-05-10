@@ -39,9 +39,19 @@
   background-position: center;
 }
 
+.pattern-top,
+.pattern-bottom-desktop,
+.pattern-bottom-mobile,
+.pattern-lines,
+.pattern-circle {
+  position: absolute;
+}
+
 .bg-desktop,
 .bg-mobile {
   background-attachment: fixed;
+  background-size: cover;
+  background-position: center;
 }
 
 .pattern-top {
