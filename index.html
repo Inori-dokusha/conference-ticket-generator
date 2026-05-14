@@ -22,7 +22,7 @@
       <!-- Form starts -->
       <div id="ticketForm" class="block">
         <div class="text-center mb-4 mx-auto w-full md:w-2xl">
-          <h1 class="text-4xl md:text-6xl lg:text-8xl font-bold mb-4">Your Journey to Coding Conf 2025 Starts Here!</h1>
+          <h1 class="text-4xl md:text-4xl lg:text-6xl font-bold mb-4">Your Journey to Coding Conf 2025 Starts Here!</h1>
           <p class="text-xl md:text-2xl text-neutral-300">Secure your spot at next year's biggest coding conference.</p>
         </div>
 
@@ -30,26 +30,52 @@
           <div id="formUpload" class="mb-4 bg-n">
             <label for="avatar" class="text-lg mb-2 block text-neutral-300">Upload Avatar</label>
 
-            <div class="border border-dashed border-neutral-500 cursor-pointer rounded-lg p-4 flex flex-col items-center" id="uploadAvatar">
+            <div
+              class="border border-dashed border-neutral-500 cursor-pointer rounded-lg p-4 flex flex-col items-center"
+              id="uploadAvatar"
+            >
               <input type="file" id="avatar" accept="image/png, image/jpeg" hidden class="file-input" />
               <div class="border border-neutral-500 rounded-lg bg-neutral-700 mb-4 overflow-hidden">
-                <img id="uploadImage" src="assets/images/icon-upload.svg" alt="Icon upload" class="p-2 bg-fixed w-12.5 h-12.5" />
+                <img
+                  id="uploadImage"
+                  src="assets/images/icon-upload.svg"
+                  alt="Icon upload"
+                  class="p-2 bg-fixed w-12.5 h-12.5"
+                />
               </div>
               <div id="actionImage" class="hidden items-center gap-3">
-                <button id="btnRemove" class="px-2 py-1 rounded-md bg-neutral-700 text-sm underline cursor-pointer">Remove Image</button>
-                <button id="btnChange" class="px-2 py-1 rounded-md bg-neutral-700 text-sm cursor-pointer">Change Image</button>
+                <button id="btnRemove" class="px-2 py-1 rounded-md bg-neutral-700 text-sm underline cursor-pointer">
+                  Remove Image
+                </button>
+                <button id="btnChange" class="px-2 py-1 rounded-md bg-neutral-700 text-sm cursor-pointer">
+                  Change Image
+                </button>
               </div>
-              <p id="uploadInstructions" class="text-md text-center text-neutral-300">Drag and drop or click to upload</p>
+              <p id="uploadInstructions" class="text-md text-center text-neutral-300">
+                Drag and drop or click to upload
+              </p>
             </div>
 
             <!-- Error Message -->
             <div class="mt-2 flex items-center" id="errorUpload">
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 16 16">
-                <path stroke="#8784a4" stroke-linecap="round" stroke-linejoin="round" d="M2 8a6 6 0 1 0 12 0A6 6 0 0 0 2 8Z" />
+                <path
+                  stroke="#8784a4"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M2 8a6 6 0 1 0 12 0A6 6 0 0 0 2 8Z"
+                />
                 <path fill="#8784a4" d="M8.004 10.462V7.596ZM8 5.57v-.042Z" />
-                <path stroke="#8784a4" stroke-linecap="round" stroke-linejoin="round" d="M8.004 10.462V7.596M8 5.569v-.042" />
+                <path
+                  stroke="#8784a4"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M8.004 10.462V7.596M8 5.569v-.042"
+                />
               </svg>
-              <small id="info" class="ml-2 text-xs text-neutral-500">Upload your photo (JPG or PNG, max size: 500KB).</small>
+              <small id="info" class="ml-2 text-xs text-neutral-500"
+                >Upload your photo (JPG or PNG, max size: 500KB).</small
+              >
             </div>
           </div>
 
@@ -67,11 +93,21 @@
               <!-- Error Message -->
               <div class="mt-2 items-center hidden" id="errorFullName">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 16 16">
-                  <path stroke="#f57261" stroke-linecap="round" stroke-linejoin="round" d="M2 8a6 6 0 1 0 12 0A6 6 0 0 0 2 8Z" />
+                  <path
+                    stroke="#f57261"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M2 8a6 6 0 1 0 12 0A6 6 0 0 0 2 8Z"
+                  />
                   <path fill="#f57261" d="M8.004 10.462V7.596ZM8 5.57v-.042Z" />
-                  <path stroke="#f57261" stroke-linecap="round" stroke-linejoin="round" d="M8.004 10.462V7.596M8 5.569v-.042" />
+                  <path
+                    stroke="#f57261"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M8.004 10.462V7.596M8 5.569v-.042"
+                  />
                 </svg>
-                <small id="errorMessage" class="ml-2 text-xs text-orange-500">Input cannot be empty.</small>
+                <small class="ml-2 text-xs text-orange-500">Input cannot be empty.</small>
               </div>
             </div>
 
@@ -90,11 +126,21 @@
               <!-- Error Message -->
               <div class="mt-2 mb-4 items-center hidden" id="errorEmailAddress">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 16 16">
-                  <path stroke="#f57261" stroke-linecap="round" stroke-linejoin="round" d="M2 8a6 6 0 1 0 12 0A6 6 0 0 0 2 8Z" />
+                  <path
+                    stroke="#f57261"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M2 8a6 6 0 1 0 12 0A6 6 0 0 0 2 8Z"
+                  />
                   <path fill="#f57261" d="M8.004 10.462V7.596ZM8 5.57v-.042Z" />
-                  <path stroke="#f57261" stroke-linecap="round" stroke-linejoin="round" d="M8.004 10.462V7.596M8 5.569v-.042" />
+                  <path
+                    stroke="#f57261"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M8.004 10.462V7.596M8 5.569v-.042"
+                  />
                 </svg>
-                <small id="errorMessage" class="ml-2 text-xs text-orange-500">Input cannot be empty.</small>
+                <small class="ml-2 text-xs text-orange-500">Input cannot be empty.</small>
               </div>
             </div>
 
@@ -112,18 +158,31 @@
               <!-- Error Message -->
               <div class="mt-2 items-center hidden" id="errorGithubAccount">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 16 16">
-                  <path stroke="#f57261" stroke-linecap="round" stroke-linejoin="round" d="M2 8a6 6 0 1 0 12 0A6 6 0 0 0 2 8Z" />
+                  <path
+                    stroke="#f57261"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M2 8a6 6 0 1 0 12 0A6 6 0 0 0 2 8Z"
+                  />
                   <path fill="#f57261" d="M8.004 10.462V7.596ZM8 5.57v-.042Z" />
-                  <path stroke="#f57261" stroke-linecap="round" stroke-linejoin="round" d="M8.004 10.462V7.596M8 5.569v-.042" />
+                  <path
+                    stroke="#f57261"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M8.004 10.462V7.596M8 5.569v-.042"
+                  />
                 </svg>
-                <small id="errorMessage" class="ml-2 text-xs text-orange-500">Input cannot be empty.</small>
+                <small class="ml-2 text-xs text-orange-500">Input cannot be empty.</small>
               </div>
             </div>
           </div>
 
           <!-- Button generate -->
           <div class="w-full mt-6">
-            <button id="generate" class="block text-center py-3 w-full bg-orange-500 rounded-lg cursor-pointer hover:bg-orange-700 active:bg-orange-700">
+            <button
+              id="generate"
+              class="block text-center py-3 w-full bg-orange-500 rounded-lg cursor-pointer hover:bg-orange-700 active:bg-orange-700"
+            >
               Generate My Ticket
             </button>
           </div>
@@ -138,7 +197,8 @@
           </h1>
           <p class="text-xl md:text-2xl text-neutral-300">
             We've emailed your ticket to
-            <span id="userEmail" class="text-orange-500">emailAndress</span> and will send updates in the run up to the event.
+            <span id="userEmail" class="text-orange-500">emailAndress</span> and will send updates in the run up to the
+            event.
           </p>
         </div>
 

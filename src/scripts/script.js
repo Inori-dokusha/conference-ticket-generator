@@ -1,18 +1,7 @@
-import { generateTicket } from "./components/form.js";
-
-generateTicket();
+import { generateTicket } from "./components/generateTicket.js";
 
 // Get element generator button
 const generateButton = document.querySelector("#generate").addEventListener("click", generateTicket);
-
-// Get error elements and input fields
-const errorInputFullName = document.querySelector("#errorFullName");
-const errorInputEmail = document.querySelector("#errorEmailAddress");
-const errorInputGithub = document.querySelector("#errorGithubAccount");
-
-// Get element to show error message
-const infoText = document.querySelector("#info");
-const noticeIcon = document.querySelectorAll("#errorUpload svg path");
 
 // Get element to upload and remove avatar
 const uploadImage = document.querySelector("#uploadImage");

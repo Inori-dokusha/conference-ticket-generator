@@ -1,5 +1,5 @@
 // Remove avatar
-function removeImage() {
+function removeImage(inputFile, url, uploadImage) {
   inputFile.value = "";
   URL.revokeObjectURL(url);
 
@@ -13,7 +13,7 @@ function removeImage() {
 }
 
 // Change avatar
-function changeImage() {
+function changeImage(inputFile) {
   inputFile.click();
 }
 

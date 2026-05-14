@@ -1,5 +1,5 @@
-import { checkFileSize } from "../utils/validation.js";
-import { removeImage, changeImage } from "./buttons.js";
+import { checkFileSize } from "./validation.js";
+import { removeImage, changeImage } from "../components/buttons.js";
 
 const uploadAvatar = document.querySelector("#uploadAvatar");
 const inputFile = document.querySelector("#avatar");
@@ -9,9 +9,9 @@ uploadAvatar.addEventListener("click", (e) => {
   if (e.target.id === "uploadAvatar") {
     clickInputFile();
   } else if (e.target.id === "btnRemove") {
-    removeImage();
+    removeImage(inputFile, url, uploadImage);
   } else if (e.target.id === "btnChange") {
-    changeImage();
+    changeImage(inputFile);
   }
 });
 
@@ -71,3 +71,5 @@ function updateImage(file) {
   uploadInstructions.classList.add("hidden");
   uploadAvatar.querySelector("#actionImage").classList.remove("hidden");
 }
+
+export { url, updateImage };
